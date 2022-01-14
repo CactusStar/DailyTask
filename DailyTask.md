@@ -11,3 +11,6 @@
     - Verify all the controls in the Issues page
     - Verify select Assigned will have correct message display if currently no issue assigned to this account
  ## API automation test
+    Read document:
+    -https://testerhome.com/topics/8200
+    -https://testerhome.com/topics/17986
