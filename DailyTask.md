@@ -26,5 +26,3 @@ The purpose is set goals for everyday to make sure learning on schedule
  
  ## API automation test
     Familiar with golang net/http package
-    - try to post package the get/post method
-    - prepare the function for read excel file
