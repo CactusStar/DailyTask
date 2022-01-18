@@ -26,3 +26,13 @@ The purpose is set goals for everyday to make sure learning on schedule
  
  ## API automation test
     Familiar with golang net/http package
+
+## 2022.1.18
+ ## Web UI automation
+    Design two case in new repository page
+    - Click "learn more" will jump to a new page
+    - Check Choose a license will have additional content display
+ ## API automation test
+    - response data from string to json convert
+    - post package get request
+    - Based on get request, add a common functional named verify get request
