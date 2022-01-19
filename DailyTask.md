@@ -10,7 +10,7 @@ The purpose is set goals for everyday to make sure learning on schedule
 
 ## 2022.1.14
  ## Web UI automation
-    Design two case in Issues page
+    Design two cases in Issues page
     - Verify all the controls in the Issues page
     - Verify select Assigned will have correct message display if currently no issue assigned to this account
  ## API automation test
@@ -20,7 +20,7 @@ The purpose is set goals for everyday to make sure learning on schedule
 
 ## 2022.1.17
  ## Web UI automation
-    Design two case in new repository page
+    Design two cases in new repository page
     - Verify the button/checkbox/Radio button status
     - Verify click link result and cancel button link status
  
@@ -29,10 +29,20 @@ The purpose is set goals for everyday to make sure learning on schedule
 
 ## 2022.1.18
  ## Web UI automation
-    Design two case in new repository page
+    Design two cases in new repository page
     - Click "learn more" will jump to a new page
     - Check Choose a license will have additional content display
  ## API automation test
     - response data from string to json convert
     - post package get request
     - Based on get request, add a common functional named verify get request
+
+## 2022.1.19
+ ## Web UI automation
+    Design two cases in Marketplace page
+    - Verify the tree items under Types
+    - Verify click explore for free, will navigate to another page, there is a free button and if closed will back
+ ## API automation test
+    - DB data prepare
+    - read DB data
+    - response verification
