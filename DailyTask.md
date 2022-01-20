@@ -52,3 +52,5 @@ The purpose is set goals for everyday to make sure learning on schedule
     - Take a common function out of each page utilities for load data from each page asset json file
     - Take the URL part out of the ini file due to different page have different requirement, it can be put in eacch json asset data
     - Take page utilities, common action, data load out of each case to be a common function for each page
+## API autmation tset
+    - Fill in the fake code and can run without error for one single verification
