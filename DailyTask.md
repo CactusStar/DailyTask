@@ -52,5 +52,12 @@ The purpose is set goals for everyday to make sure learning on schedule
     - Take a common function out of each page utilities for load data from each page asset json file
     - Take the URL part out of the ini file due to different page have different requirement, it can be put in eacch json asset data
     - Take page utilities, common action, data load out of each case to be a common function for each page
-## API autmation tset
+## API autmation test
     - Fill in the fake code and can run without error for one single verification
+
+## 2022.1.21
+ ## Web UI automation
+    - Design two case about notification page
+    - try to see if emoji can be verified or not
+ ## API automation test
+    - Add some special field like status code in the generate string part
