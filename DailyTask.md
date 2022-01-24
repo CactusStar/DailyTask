@@ -61,3 +61,10 @@ The purpose is set goals for everyday to make sure learning on schedule
     - try to see if emoji can be verified or not
  ## API automation test
     - Add some special field like status code in the generate string part
+
+## 2022.1.24
+ ## Web UI automation
+    - Design 1-2 case about the color verification
+
+ ## API automation test
+    - empty for today
