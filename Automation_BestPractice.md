@@ -10,5 +10,6 @@
            - use Actions package to move to element have pause, perform, then get text
            - for github notification, it have atrribute aria-label, this contains the tooltip
            - it seems it is hard to verify tooltip displayed by selenium because there is no locator for the tooltip text
+     - If IsSelected() function not work due to not refresh, we can try to get the control(like checkbox, radio button) "checked"(or other meaningful) attribute ==> assertIsNone()
 
 # API autmomation
