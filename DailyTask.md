@@ -68,3 +68,9 @@ The purpose is set goals for everyday to make sure learning on schedule
 
  ## API automation test
     - empty for today
+
+## 2022.1.25
+ ## Web UI automation
+    - Design 2 case 
+ ## API automation test
+    - Investigate Fiddler, make sure Jmeter login github can work
