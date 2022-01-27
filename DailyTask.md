@@ -80,3 +80,11 @@ The purpose is set goals for everyday to make sure learning on schedule
     - Design 1-2 cases
  ## API automation test
     - Try post method coding
+
+## 2022.1.27 
+ ## Web UI automation
+    - will stop from today to focus on API test(no matter manual or auto)
+    - will restart for daily test case design once API test is cleared
+ ## API test
+    - Investigate post method for the need login website by Jmeter
+    - Investigate the usage of Fiddler
