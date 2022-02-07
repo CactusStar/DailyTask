@@ -88,3 +88,8 @@ The purpose is set goals for everyday to make sure learning on schedule
  ## API test
     - Investigate post method for the need login website by Jmeter
     - Investigate the usage of Fiddler
+
+## 2022.2.8
+ ## API test
+    - learn the usage of Newman
+    - Try run collection cases with assertion
