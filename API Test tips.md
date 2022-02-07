@@ -6,3 +6,4 @@
      - raw format have text/Json/xml/JS...
      - In the Console, we can see the real request we sent and the response we recieve to locate the root cause of the failure(like compare with Fiddler result)
      - If a variable will be used in many places, it can be put as a environment variable
+     - Mock server can be used if the developing is not finished but we want to test our test case logic
