@@ -1,0 +1,151 @@
+Unittest, pytest 框架的理解
+答：Unittest 和 pytest 可以用来做单元测试也可以用来做UI 自动化测试 结合selenium。主要的功能在于组织测试用例，丰富的断言还有对测试结果的支持。
+
+webdriver的原理：
+Webdriver 本质上是基于http 协议的一种协议，用json 传输数据。 工作原理如下：
+我们定义 client 为我们的自动化脚本，那么webdriver的作用是模拟服务器，client将请求发往服务器， 服务器将请求转化成浏览器可以识别的形式从而操作浏览器，与此同时接收浏览器的响应并转化成client 端可识别的信息，从而完成一次测试。
+
+定位属性动态变化的元素：
+	1. driver.find_element_by_xpath ("//div[contains(@id, 'auto-id')]") driver.find_element_by_xpath ("//div[starts-with(@id, 'auto-id')]") driver.find_element_by_xpath ("//div[ends-with(@id, 'auto-id)]") # 这个需要结尾是‘auto-id’
+	2. 可以通过先定位父级元素，或者父级的父级元素，然后通过xpath 层级去定位这个动态的元素
+
+Selenium 如何处理web 弹窗，js弹窗：
+	1. 如果是alert 窗口，可以通过switch_to_alert()， 然后通过text(), accept(), dismiss(), send_keys() 等方式去操作或者获取这个窗口有关的信息
+	2. 如果既不是alert 也不是 js 弹窗， 试试用driver.switch_to_default_content()
+selenium如何处理windows 弹窗
+答：尝试使用 autoit 去操作js 无法识别的元素
+selenium常见的异常：
+答: NoSuchElementException, TimeoutException,  ElementNotSelectableException, ElementNotVisibleException, 
+Selenium driver.close()和driver.quit() 的区别
+答：close 是关闭当前窗口，有可能有多个窗口。Quit 是直接退出浏览器进程
+Selenium如何判断元素是否存在
+答：selenium中不存在get exist 这种方法，可以通过try except 的方式去判断，具体实现是尝试获取一个元素，如果没有NoSuchElementException发生，则可以将flag置为true，反之置为false
+Selenium如何判断元素出现
+答：存在两种情况，一种是元素根本没有，可以用上面提到的 get exist 方法。一种是元素存在，但是本身是hidden 的状态，这时可以用 is_displayed() 去验证
+Selenium怎么选择下拉菜单的元素
+答：两种方式。一种通过select 标签实现的，这种可以通过 Select 类去调用SelectByIndex，SelectByVisibleText，SelectByValue。一种不是通过select标签实现的，这种可以分别抓取对应菜单的元素然后进行操作
+Selenium的定位方式
+id，css, xpath, name, tag name, link, partial link, class
+如何提高selenium自动化脚本执行效率
+	1. 合理使用等待，尽量不要用sleep和减少implicitly wait 的使用，多用wait until，还可以保证脚本的稳定性
+	2. 减少使用IEDriver
+	3. 优化业务逻辑，可以直接取列的不要一个cell 一个cell的去读取
+	4. 尽量不要使用过长的xpath 路径去定位元素
+selenium如何保证元素操作的成功率
+需要封装一个waitTillExist 的方法，具体实现是通过 WebDriverWait().until().
+如果当前的界面该元素不可见，需要滚动鼠标滚轮去让元素可见，之后再操作。 滚动需要使用selenium的 execute_script 的方法("argument[0].scrollIntoView();", element)
+当有可能存在环境问题，比方机器性能差，网速差的时候 可以适时的增加等待的时间以保证脚本运行稳定
+Selenium 的 input 框如果是自动补全的，该如何设置值
+答：此时可以使用sendKey 的方式。如果sendkey 不稳定，则推荐使用execute_script("argument[0].value=''", element)
+Selenium 如何获取富文本框有关的信息
+答： 如果想获取富文本框的内容，可以通过get_attribute("value") 的方式去获取，可以通过sendkey 的方式去对富文本框进行修改
+Selenium如何获取元素的css 属性
+答： 可以通过 value_of_css_property() 进行获取
+Selenium如何实现截图
+答：webdriver中的方法 get_screenshot_as_file("file path"). 如果要实现发现fail 就截图，则需要将代码放到 try catch 中的catch部分
+如果要截取自定义大小的图片，需要安装包 Pillow。然后from PIL import Image， 获取元素的大小set 进im.crop（）中
+Selenium 平时遇到过哪些问题
+答：主要是定位的时候会有问题。比方说，有很多条Issue 是一个一个的 li，想要定位其中一个，他的id 是变化的，变化的是number。所以这个时候需要通过动态的定义，需要引入一个变量在这个id 中，然后通过传值去定位不同的link。还有一个是当你输入东西的时候这个输入框就会有一个dirty 的*标志，这个有一个属性是：after， 这个需要通过execute script的方式去获取。具体实现是通过 window.getComuputedStyle(element, :after).getPropertyValue("content")
+Selenium如何通过子元素去定位父元素
+答：可以用.parent 或者也可以在xpath 中写 .//[@name="abc"]/..
+如果有时候点击失效了，怎么办
+答： 可以使用js 点击 driver.execute_script(document.getElementById("aaa").click())
+
+Linux 简单命令
+Cd
+Mkdir
+mv
+
+数据库常见问题
+表连接分为 内连接（inner join），外连接（left join，right join）， 全连接（full join）
+内连接：select *from A INNER JOIN B ON A.book_id=B.book_id, 取表A和表B 的交集
+外连接：select * from A LEFT JOIN B on A.book_id=B.book_id, 取表A和表B 的交集和左表也就是表A剩余的部分（使用场景：可以用于组合两张表，实际上外连接就是左表或者右表的全部数据，只不过可以对某些数据放上另外一个表的数据）
+全连接：select * from A FULL JOIN B on A.book_id=B.book_id, 取符合条件的部分和表A，B 剩余部分
+
+Fiddler 如何mock数据， 如何改写服务端数据
+答：关于mock，通过fiddler的auto responder 设置要mock 的url 以及期待的 mock 数据，然后save并且enable rule。此时访问对应的url 就会返回写好的mock data
+接口测试面试题
+什么是接口测试
+答：程序中负责在不同模块之间传输或者接受数据进行处理的类或者函数
+HTTP 和 HTTPS 之间的区别
+答：HTTPS 是基于SSL+http构建的可以进行加密传输、身份认真的网络协议，比http 要更加安全。但是HTTPS 需要到CA 去注册申请证书，所以需要一定的费用。Http 是明文传输
+HTTPS/HTTP 在哪一层：
+答：在应用层
+get和post 的区别：
+答：get 是通过地址栏传输，post是通过报文传输
+get参数长度有限制，受限于url 长度，post没有这个限制
+get产生一个数据包，post产生两个数据包（浏览器先发送header，得到100 response，再发送body，得到200 
+get的历史会被保存在浏览器里，post不会
+Post 的提交数据格式
+答：application/x-www-form-urlencoded, application/form-data, application/json, text/xml
+什么是HTTP 无状态协议
+答：所谓无状态是指浏览器和服务器间通过http 协议进行通信时不会有任何记录，每个请求都是独立的。缺少状态意味着如果需要上一次的信息去做后续的处理，这部分信息就要重传，这会导致浏览器和服务器之间的每次通信都会有很多重复数据的发送和接收。Keep-alive并没有解决这个问题。 在这一点上，的确是解放了服务器但是严重阻碍了web 应用程序的实现。所以有了 cookie 和 session
+Cookie和Session 的区别
+答：Cookie 存储在浏览器，session存储在服务器。Cookie可以被欺骗，出于安全的考虑应该使用session。
+session存在于服务器上，当访问增多，会使服务器性能下降，出于性能考虑应该使用cookie。
+单个Cookie最大可以存储4k，大部分浏览器只允许最多有20个cookie。可以将登录等重要的信息存在session中，其他需要保存的信息放在Cookie中。
+返回状态码
+答：1xx -- 信息提示
+2xx -- 成功（200 ok， 201 用户新建或修改数据成功，202 一个请求已经进入后台排队， 204 用户删除数据成功）
+3xx -- 重定向
+4xx -- 客户端错误 （400 用户请求错误， 401 用户没有权限， 403 用户得到授权但是访问被禁止， 404 用户请求没有资源， 406 用户请求的格式不可得）
+5xx -- 服务器错误 （服务器发生错误）
+什么是DNS
+答：DNS 是对域名进行解析，解析成对应的ip 地址，这样用户就不用通过ip去访问服务器。
+怎么做接口测试
+答：获取接口规范（接口文档）
+设计接口功能测试用例
+各种入参的验证
+接口的返回值的各种验证
+了解接口逻辑实现，进行接口逻辑覆盖
+接口并发，安全性，性能
+采用工具或者自写代码验证
+记录bug
+如何设计接口测试用例
+	1. 是否满足前提条件， 比方说需要登录token。如果前置条件有n 个，那么可能设计n 条case 去验证每个条件
+	2. 是否携带默认值参数，用例为 带默认值的参数都不填值，其他的必填项都填充正确，设计一条用例
+	3. 参数是否必填，每个必填参数设计一条case让该参数为空
+	4. 参数之间是否有关联
+	5. 参数数据类型的限制
+	6. 参数的取值范围
+做接口测试都测什么
+	1. 可用性测试
+		a. 接口功能是否实现
+		b. 返回值测试（内容，类型，接收方可以正常进行解析）
+		c. 参数边界值，等价类
+	2. 错误和异常处理测试
+		a. 输入异常值，接口能够正确处理，且能够按照接口约定返回相应信息
+		b. 输入错误参数，接口能够按照预期正常响应
+		c. 多输入，少输入参数，接口能够正常处理，按照预期返回响应
+		d. 错误的输入格式的测试（json 写成form 等）
+	3. 安全性测试
+		a. 敏感数据是否加密
+		b. 返回数据是否含有敏感数据
+		c. 接口是否对传入数据做安全校验，如身份信息需要加token等
+		d. 接口是否防止恶意请求（大量的伪造/mock 请求导致接口崩溃）
+	4. 性能测试
+		a. 并发请求相同的接口（尤其是post），接口的处理情况（如果有对相同数据的更改，是否会引发崩溃或者数据混乱）
+		b. 接口响应时长是否可接受
+		c. 测试最大并发量，是否满足产品需要
+没有接口文档，如何做接口测试
+答：使用fiddler进行抓包，解析响应进行针对性测试。响应不清楚的部分，集中确认
+上下游接口有依赖如何处理
+答：使用环境变量
+依赖于第三方的数据，如何测试
+答：mock。通过postman 可以mock server，自己定义响应，会生成一个随机的url，即mock 的server
+依赖登录的接口如何测试
+答：带session或者cookie，或者如果只有一个token，可以把token写入环境变量（脚本就是全局变量）
+如果模拟弱网测试
+答：通过工具clumsy，他可以模拟延迟，丢包，节流，重发，乱发，篡改
+接口测试发现的bug有哪些
+答： 边界值
+非法值直接set 进数据库等
+接口数据加密：
+答：以postman为例， 一个request请求中 Pre-request script 用来对数据进行加密， Test 用来对响应数据进行解密。具体实现需要用变量占位，定义环境变量。然后将加密之后的数据值传入环境变量中，这样在一次request中传输数据时引入环境变量就可以将加密之后的值传输给服务器。
+工作中遇到的最大的困难
+	1. 需要连接硬件的测试，但是硬件在美国，网速十分缓慢。同时一些硬件配置的相关测试需要和美国同事沟通。克服：足够的耐心，充分利用等待时间，充分合作。
+	2. 自动化脚本想要同时适用于本地化的测试，困难在于已有的solution很多Common function 并没有对String进行提取。克服：对于新写的脚本对String进行充分提取，同时和同事一起在短时间内对大量String进行提取，对已有的Common function进行完善。保证了自动化脚本的顺利执行。工具的使用以达到快速提取。具体实现是，检索固定路径下的脚本中 使用“”包裹的部分进行参数化，提取出来，使用第一个单词做为json 的key，然后value 写入，最后在脚本开始处对提取进行引入。
+最值得骄傲或者是最有成就感的事
+手动部分，提出了很多关键的bug 保证了产品质量。自动化部分，脚本的信息提供很足，能够快速定位问题。
+逻辑性很强的bug
+问题描述：一个输入框，输入非法值之后第一次apply 会弹出正确的错误验证信息，紧接着再apply 一次，这个非法值会成功存储。原因是在于，我们对于非法值的验证部分不够强壮，第二次apply 的时候直接将非法值传给了web service。
